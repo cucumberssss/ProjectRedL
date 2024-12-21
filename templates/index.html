@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Погода на маршруте</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://codepen.io/chriscoyier/pen/KKxRzQ.css">
+</head>
+<body>
+
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul>
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+
+    {% if weather %}
+        <h2>Текущая погода в {{ weather[0]['LocalizedName'] }}</h2>
+        <p>{{ weather[0]['WeatherText'] }}</p>
+        <p>Температура: {{ weather[0]['Temperature']['Metric']['Value'] }}°C</p>
+        <p>{% if bad_weather %}Плохая погода!{% else %}Погода хорошая.{% endif %}</p %}
+    {% endif %}
+
+    <!-- Встраиваем Dash приложение -->
+    <h2>График прогноза погоды</h2>
+    <iframe src="/dash/" style="width: 100%; height: 600px; border: none;"></iframe>
+
+</body>
+</html>
